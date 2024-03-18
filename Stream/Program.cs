@@ -8,12 +8,11 @@ namespace Course
         {
             // Add the path of your file.
             string path = @"C:\Users\guguo\source\repos\Stream\Stream\NovaPasta\file1.txt";
-            FileStream fs = null;
+
             StreamReader sr = null;
             try
             {
-                fs = new FileStream(path, FileMode.Open);
-                sr = new StreamReader(fs);
+                sr = File.OpenText(path);
                 string line = sr.ReadLine();
                 Console.WriteLine(line);
             }
@@ -23,7 +22,6 @@ namespace Course
             }
             finally
             {
-                if (fs != null) fs.Close();
                 if (sr != null) sr.Close();
             }
         }
