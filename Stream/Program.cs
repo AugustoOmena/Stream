@@ -1,31 +1,36 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Course
 {
-    class Program { 
-    
-    static void Main(string[] args)
+    class Program
+    {
+        static void Main(string[] args)
         {
-            // Add the path of your file.
-            string path = @"C:\Users\guguo\source\repos\Stream\Stream\NovaPasta\file1.txt";
+            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string sourceDirectory = Path.Combine(projectDirectory, "Arquivos1");
+            string destinationDirectory = Path.Combine(projectDirectory, "Arquivos2");
 
-            StreamReader sr = null;
             try
             {
-                sr = File.OpenText(path);
-                while (!sr.EndOfStream)
+                if (!Directory.Exists(destinationDirectory))
                 {
-                    string line = sr.ReadLine();
-                    Console.WriteLine(line);
+                    Directory.CreateDirectory(destinationDirectory);
                 }
-            }
-            catch (IOException e) {
-                Console.WriteLine("An error occurred");
-                Console.WriteLine(e.Message);
-            }
-            finally
+
+                string[] files = Directory.GetFiles(sourceDirectory);
+
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string destinationPath = Path.Combine(destinationDirectory, fileName);
+                    File.Copy(file, destinationPath, true);
+                    Console.WriteLine($"Arquivo '{fileName}' copiado com sucesso.");
+                }
+            } catch (IOException e)
             {
-                if (sr != null) sr.Close();
+                Console.WriteLine("Ocorreu um erro ao copiar os arquivos.");
+                Console.WriteLine(e.Message);
             }
         }
     }

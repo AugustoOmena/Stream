@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="NovaPasta\" />
+    <Folder Include="Arquivos2\" />
   </ItemGroup>
 
 </Project>
